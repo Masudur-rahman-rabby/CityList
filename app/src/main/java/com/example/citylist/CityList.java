@@ -2,6 +2,7 @@ package com.example.citylist;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -32,4 +33,45 @@ public class CityList {
         Collections.sort(cityList);
         return cityList;
     }
+
+    /**
+     * Removes the specified city from the list of cities.
+     *
+     * @param city The city to remove.
+     * @throws IllegalArgumentException If the city is not in the list.
+     */
+    public void delete(City city) throws IllegalArgumentException {
+        if (!cities.contains(city)) {
+            throw new IllegalArgumentException("City not found");
+        }
+        cities.remove(city);
+    }
+    /**
+     * Returns the total number of cities in the city list.
+     *
+     * @return the total number of cities
+     */
+    public int count() {
+        return cities.size();
+    }
+    /**
+     * This returns a sorted list of cities
+     *
+     * @return Return the sorted list of cities
+     */
+    public List<City> getCities(String sortCriteria) {
+        List<City> cityList = new ArrayList<>(cities);
+        if (sortCriteria.equals("city")) {
+            Collections.sort(cityList, Comparator.comparing(City::getCityName));
+        } else if (sortCriteria.equals("province")) {
+            Collections.sort(cityList, Comparator.comparing(City::getProvinceName));
+        } else {
+            throw new IllegalArgumentException("Invalid sort criteria");
+        }
+        return cityList;
+    }
+    public boolean contains(City city2) {
+        return cities.contains(city2);
+    }
+
 }
